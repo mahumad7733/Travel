@@ -1,0 +1,232 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} إضافة مسافر{% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+{% csrf_token %} 
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+
+            <div class="pcoded-content" style="direction:rtl">
+                <div class="pcoded-inner-content">
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row" style="direction:rtl">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header  " style="direction:ltr">
+                                            <h5>اضافة مسافر</h5>
+                                        </div>
+                                        <div class="card-block">
+                                            <form action="{{url}}" method="post" class="" id="myform">
+                                            <div class="row">
+                                                
+                                                
+                                                
+                                                <div class="col-sm-12 mb-4">
+                                                    <div class="form-group">
+                                                        <label>اسم المسافر</label>
+                                                        {{form.name}}
+                                                    
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label for="fn">الإميل</label>
+                                                        {{form.email}}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label for="ln"> حالة موافقة البداء بالمعاملة</label>
+                                                        {{form.confirm}}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label for="ln">العنوان</label>
+                                                        {{form.address}}
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-sm-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label for="ln">المدينة</label>
+                                                        {{form.state_name}}
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-sm-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label for="ln">الجوال</label>
+                                                        {{form.mobile1}}
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-sm-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label for="ln">رقم الجواز</label>
+                                                        {{form.passport }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label for="ln">صورة</label>
+                                                        {{form.photo}}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label for="ln">حالة الطلب</label>
+                                                        {{form.status}}
+                                                    </div>
+                                                </div>
+
+                                                
+                                                
+                                                <button type="submit" class="btn btn-primary">حفظ</button>
+                                            </div>
+                                        </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <table id="pkg-list-table" class=" datatable table nowrap dataTable-table">
+                                    
+                                    <thead>
+                                    <tr>
+                                            <th data-sortable="" style="width: 27.1795%;">
+                                                <a href="#" class="dataTable-sorter">معرف</a>
+                                            </th>
+                                            <th data-sortable="" style="width: 18.4615%;">
+                                                <a href="#" class="dataTable-sorter">الاسم</a>
+                                            
+                                            </th>
+                                                    
+                                            
+                                                    
+                                            <th data-sortable="" style="width: 17.7436%;">
+                                                <a href="#" class="dataTable-sorter">حالة الموافقة</a>
+                                            </th>
+                                            <th data-sortable="" style="width: 17.7436%;">
+                                                <a href="#" class="dataTable-sorter">رقم الجوال</a>
+                                            </th>   
+                                            <th data-sortable="" style="width: 17.7436%;">
+                                                <a href="#" class="dataTable-sorter">حالة الطلب</a>
+                                            </th>   
+                                            <th data-sortable="" style="width: 10.5641%;">
+                                                <a href="#" class="dataTable-sorter">اعداد</a>
+                                            </th>
+                                                    
+                                                
+                                    </tr>
+                                        </thead>
+                                        <tbody class="show_Operation">
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <!-- [ Main Content ] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+    let dtb="{% url 'packagesJson'%}";
+    let csrf_token = '{{ csrf_token }}';
+    let form_id = '#myform';
+    $(document).on('submit', form_id, function (e) {
+       
+
+        $('#submit-button').button('loading');
+        e.preventDefault();
+
+        
+            $.ajax({
+                url: $(this).attr('action'),
+                data: new FormData(this),
+                method: 'POST',
+                contentType: false,
+                processData: false,
+                beforeSend: function(xhr) {
+                        xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                    },
+                success: function (data) {
+                    $('span[class="text-danger"]').remove();
+                    if (data.status == 1) {
+                        
+                        $(form_id)[0].reset();
+                        alert(data.message);
+                        $('.datatable').DataTable().ajax.reload();
+                        
+                    } else if (data.status == 2) {
+
+                        $.each(data.error, function () {
+                            let form = $(this)[0].form_id;
+                            $(`#id_${form}-item`).parents('.item').css('outline', 'red auto');
+                            alert_message($(this)[0].message, 'alert alert-danger');
+                        });
+                        // get_max_id();
+                    } else if (data.status == 0) {
+                        
+                        if (data.message != 'base') {
+                            alert_message(data.message.message, data.message.class);
+                        }
+                        let row_id = data.error.form_id;
+                        let error = JSON.parse(data.error.error);
+
+                        $.each(error, function (i, value) {
+                            let div = '<span class="text-danger">';
+                            $.each(value, function (j, message) {
+                                div += `- ${message.message}<br>`;
+                            });
+                            
+                            $(`#id_${row_id}-${i}`).parent().append(div);
+                            $(`#div_id_${i}`).append(div);
+                        });
+                        // alert($('input[name="code"]').val());
+                        // get_max_id();
+                        // $('#account').val(null).trigger('change');
+                        
+
+                    }
+
+                    $('#submit-button').button('reset');
+                    
+                    // get_max_id();
+                },
+                error: function (data) {
+                    alert('check input values');
+
+                }
+            });
+         
+
+    });
+   
+
+    $(document).ready(function () {
+    var oTable = $('.datatable').dataTable({
+        // ...
+        "processing": true,
+        "serverSide": true,
+        "ajax": "{% url 'travellersJson' %}"
+    });
+    // ...
+});
+</script>
+
+{% endblock javascripts %}

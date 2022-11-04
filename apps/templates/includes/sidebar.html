@@ -1,0 +1,64 @@
+<!-- [ navigation menu ] start -->
+<nav class="pcoded-navbar">
+    <div class="navbar-wrapper">
+        <div class="navbar-brand header-logo">
+            <a href="{%url 'show_dashboard'%}" class="b-brand">
+                <div class="b-bg">
+                    <i class="feather icon-trending-up"></i>
+                </div>
+                <span class="b-title">الغزالي</span>
+            </a>
+            <a class="mobile-menu" id="mobile-collapse" href="javascript:"><span></span></a>
+        </div>
+        <div class="navbar-content scroll-div">
+            <ul class="nav pcoded-inner-navbar">
+                <li class="nav-item pcoded-menu-caption">
+                    <label>قوائم</label>
+                </li>
+                <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" 
+                    class="nav-item {% if 'index' in segment %} active {% endif %}">
+                    <a href="{%url 'show_dashboard'%}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span
+                            class="pcoded-mtext">الرئيسي</span></a>
+                </li>
+                <li data-username="Profile Page" 
+                    class="nav-item {% if 'profile' in segment %} active {% endif %}">
+                    <a href="{% url 'packages' %}" class="nav-link">
+                        <span class="pcoded-micon"><i class="feather icon-package"></i></span>
+                            <span class="pcoded-mtext">اضافة الحزم</span></a>
+                </li>
+                <li data-username="Profile Page" 
+                class="nav-item {% if 'profile' in segment %} active {% endif %}">
+                <a href="{% url 'travellers' %}" class="nav-link">
+                    <span class="pcoded-micon"><i class="fas fa-truck"></i></span>
+                        <span class="pcoded-mtext">اضافة مسافر</span></a>
+            </li>
+            <li data-username="Profile Page" 
+                class="nav-item {% if 'profile' in segment %} active {% endif %}">
+                <a href="{% url 'booking' %}" class="nav-link">
+                    <span class="pcoded-micon"><i class="fas fa-window-restore"></i></span>
+                        <span class="pcoded-mtext">اضافة حجز</span></a>
+            </li>
+                <li data-username="Profile Page" 
+                class="nav-item {% if 'profile' in segment %} active {% endif %}">
+                <a href="{%url 'show_all_books'%}" class="nav-link">
+                    <span class="pcoded-micon"><i class="fas fa-street-view"></i></span>
+                        <span class="pcoded-mtext">عرض جميع الحجوزات</span></a>
+            </li>
+            <li data-username="Profile Page" 
+            class="nav-item {% if 'profile' in segment %} active {% endif %}">
+            <a href="/profile.html" class="nav-link">
+                <span class="pcoded-micon"><i class="fas fa-hands"></i></span>
+                    <span class="pcoded-mtext">الحجوزات المعلقة</span></a>
+        </li>                
+        <li data-username="Profile Page" 
+        class="nav-item {% if 'profile' in segment %} active {% endif %}">
+        <a href="/profile.html" class="nav-link">
+            <span class="pcoded-micon"><i class="fas fa-hand-paper"></i></span>
+                <span class="pcoded-mtext">الحجزوات المنتهية</span></a>
+    </li>
+    
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- [ navigation menu ] end -->

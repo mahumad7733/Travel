@@ -1,0 +1,75 @@
+{% extends "home/website/base.html" %}
+
+{% block content %}
+
+<style>
+    .column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+    <form action="{%url 'search_p'%}" class="form-horizontal vaccin-form1" 
+        method="post">
+        <input name="id" type="hidden" value="">
+      
+            <div class="row">
+                <div class="column" style="">
+                </div>
+                <div class="column" style="margin-left: 50%;">
+                    <h2 for="search">بحث عن رقم الجواز</h2>
+                    <br>
+                    <input name="search" type="search" id="search_input"  placeholder="بحث...">
+                    <br>
+                    <button type="submit" class="btn btn-primary" id="search_t">بحث</button>
+                    
+                </div>
+             
+              </div>
+              
+      
+    </form>
+{% block javascripts %}
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+ <script>
+let url ="{%url 'search_p'%}";
+let csrf_token = '{{ csrf_token }}';
+    $("#search_t").on('click', function(e){
+    e.preventDefault();
+    $.ajax({
+                url: url,
+                data: {"text_search":$("#search_input").val()},
+                method: 'POST',
+             
+                beforeSend: function(xhr) {
+                        xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                    },
+                success: function (data) {
+                    $('span[class="text-danger"]').remove();
+                    if (data.status == 1) {
+                        
+                        alert(data.state_note);
+
+                    } 
+                 },
+                error: function (data) {
+                    alert('check input values');
+
+                }
+            });
+         
+
+})
+
+ </script>
+
+{% endblock javascripts %}
+{% endblock content %}
